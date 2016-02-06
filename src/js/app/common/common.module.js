@@ -1,7 +1,11 @@
 import angular from 'angular';
 
-let moduleName = "app.common";
+import controllerModule from './controller/common.controller.module.js';
 
-let commonModule = angular.module(moduleName, []);
+let moduleName = 'app.common';
 
+let commonModule = angular.module(moduleName, [
+	
+	controllerModule.name]);
+	
 export default commonModule;

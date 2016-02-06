@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 import commonModule from './common/common.module.js';
-import homeModule from './main/main.module.js';
+import mainModule from './main/main.module.js';
 
 import templatesModule from "app:templates";
 import styles from "app:styles-adapter";
@@ -9,9 +9,9 @@ import styles from "app:styles-adapter";
 let moduleName = "app";
 
 let appModule = angular.module(moduleName, [
-	
+    
 	commonModule.name,
-	homeModule.name,
+	mainModule.name,
 	templatesModule.name]);
 
 angular.element(document).ready(() => {

@@ -8,75 +8,59 @@ let gulp			= require('gulp'),
 	utils			= require('./build-utils'),
 	config			= require('./build-config');
 	
-gulp.task('build-files', ['build-files:index', 
-        'build-files:config', 
-        'build-files:systemjs',
-        'build-files:manifest', 
-        'build-files:import',
-        'build-files:json-templates',
-        'build-files:icon'], function (done) {
+gulp.task('build-files', [
+        'build-files:index',  
+        'build-files:systemJs',
+        'build-files:manifest',
+        'build-files:ext',
+        'build-files:json-templates'], function (done) {
 	return done();
 });
 
 gulp.task('build-files:index', [], function () {
-	log(`Copying ${config.file.index} to ${config.dir.public}`);
+	log(`Copying ${config.file.index} to ${config.dir.public.root}`);
 	
-	return gulp.src(config.dir.src + config.file.index)
+	return gulp.src([config.dir.src.root + config.file.index])
 	
 		.pipe($.plumber({ handleError: errorHandler }))
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.public.root));
 });
 
-gulp.task('build-files:config', [], function () {
-	log(`Copying ${config.file.systemJs.config} to ${config.dir.public}`);
+gulp.task('build-files:systemJs', [], function () {
+	log(`Copying ${Object.keys(config.file.systemJs).join(', ')} to ${config.dir.public.js}`);
 	
-	return gulp.src(config.file.systemJs.config)
-	
-		.pipe($.plumber({ handleError: errorHandler }))
-		.pipe(gulp.dest(config.dir.public));
-});
-
-gulp.task('build-files:systemjs', [], function () {
-    log(`Copying ${config.file.systemJs.systemJs} to ${config.dir.public}`);
-	
-	return gulp.src(config.dir.jspm_packages + config.file.systemJs.systemJs)
+	return gulp.src([
+        config.dir.root + config.file.systemJs.config,
+        config.dir.vendor.jspm_packages + config.file.systemJs.systemJs,
+        config.dir.src.js + config.file.systemJs.import])
 	
 		.pipe($.plumber({ handleError: errorHandler }))
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.public.js));
 });
 
 gulp.task('build-files:manifest', [], function () {
-    log(`Copying ${config.file.manifest} to ${config.dir.public}`);
+    log(`Copying ${config.file.manifest} to ${config.dir.public.root}`);
 	
-	return gulp.src(config.file.manifest)
+	return gulp.src([config.dir.root + config.file.manifest])
 	
 		.pipe($.plumber({ handleError: errorHandler }))
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.public.root));
 });
 
-gulp.task('build-files:import', [], function () {
-    log(`Copying ${config.file.import} to ${config.dir.public}`);
+gulp.task('build-files:ext', [], function () {
+    log(`Copying ${Object.keys(config.file.ext).join(',')} to ${config.dir.public.ext}`);
 	
-	return gulp.src(config.dir.js + config.file.import)
+	return gulp.src([`${config.dir.ext.root}**/*`])
 	
 		.pipe($.plumber({ handleError: errorHandler }))
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.public.ext));
 });
 
 gulp.task('build-files:json-templates', function () {
-    log(`Copying json templates to ${config.dir.public}templates/`);
+    log(`Copying json templates to ${config.dir.public.jsonTemplates}`);
     
-    return gulp.src(`${config.dir.templates}*.json`)
+    return gulp.src(`${config.dir.src.jsonTemplates}**/*`)
     
         .pipe($.plumber({ handleError: errorHandler }))
-        .pipe(gulp.dest(`${config.dir.public}templates/`));
-});
-
-gulp.task('build-files:icon', [], function () {
-    log(`Copying ${config.file.icon} to ${config.dir.public}`);
-	
-	return gulp.src(config.dir.img + config.file.icon)
-	
-		.pipe($.plumber({ handleError: errorHandler }))
-		.pipe(gulp.dest(config.dir.public));
+        .pipe(gulp.dest(config.dir.public.jsonTemplates));
 });

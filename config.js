@@ -18,14 +18,18 @@ System.config({
 
   map: {
     "angular": "github:angular/bower-angular@1.5.0",
+    "angular-ui-router": "github:angular-ui/ui-router@0.2.17",
     "app:styles-adapter": "src/js/styles/styles-adapter.js",
-    "app:templates": "public/templates.js",
+    "app:templates": "public/js/templates.js",
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
     "clean-css": "npm:clean-css@3.4.9",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.20",
+    "github:angular-ui/ui-router@0.2.17": {
+      "angular": "github:angular/bower-angular@1.5.0"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },

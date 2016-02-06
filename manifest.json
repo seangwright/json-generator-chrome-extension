@@ -5,8 +5,12 @@
     "version": "1.0",
     
     "browser_action": {
-        "default_icon": "icon.png",
-        "default_popup": "index.html",
+        "default_icon": "ext/icon.png",
         "default_title": "Generate Json!"
+    },
+    
+    "background": {
+        "scripts": ["ext/background.js"],
+        "persistent": false
     }
 }

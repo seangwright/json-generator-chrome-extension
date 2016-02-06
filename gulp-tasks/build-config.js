@@ -1,7 +1,10 @@
 'use strict';
 
 let path		= require('path'),
-	argv		= require('yargs').argv;
+	argv		= require('yargs').argv,
+    
+    DevBuilder		= require('jspm-dev-builder'),
+	jspm			= require('jspm');
 	
 let app = {
 	module: {
@@ -25,15 +28,29 @@ let build = {
 };
 
 let dir = {
-	public: './public/',
-    vendor: ['./node_modules/', './jspm_packages/'],
-	src: './src/',
-    js: './src/js/',
-	app: './src/js/app/',
-	styles: './src/css/',
-    img: './src/img/',
-	jspm_packages: './jspm_packages/',
-    templates: './templates/'
+    root: './',
+	public: {
+        root: './public/',
+        js: './public/js/',
+        css: './public/css/',
+        ext: './public/ext/',
+        jsonTemplates: './jsonTemplates/'
+    },
+    vendor: {
+        jspm_packages: './jspm_packages/',
+        node_modules: './node_modules/',
+    },
+	src: {
+        root: './src/',
+        js: './src/js/',
+        app: './src/js/app/',
+        styles: './src/css/',
+        img: './src/img/',
+        jsonTemplates: './src/jsonTemplates/'
+    },
+    ext: {
+        root: './ext/'
+    }
 };
 
 let file = {
@@ -43,14 +60,16 @@ let file = {
 		template: 'templates.js',
 		style: 'styles.js'
 	},
-    import: 'import.js',
-    manifest: './manifest.json',
 	systemJs: {
 		systemJs: 'system.js',
-		config: 'config.js'
+		config: 'config.js',
+        import: 'import.js'
 	},
-	index: 'index.html',
-	icon: 'icon.png'
+    ext: {
+        icon: 'icon.png'
+    },
+    manifest: 'manifest.json',
+	index: 'index.html'
 };
 
 let setting = {
@@ -88,10 +107,30 @@ let setting = {
 	}
 };
 
+let builder = {
+    app: new DevBuilder({
+			jspm: jspm, // so you can use your local version of jspm
+			expression: app.module.app, // path to your app's entry point
+			outLoc: dir.public.js + file.bundle.app, // where you want the output file
+			logPrefix: 'jspm-app', // put at the beginning of log messages from dev builder
+			buildOptions: setting.bundleOptions
+    }),
+    vendor: new DevBuilder({
+        jspm: jspm, // so you can use your local version of jspm
+        expression: app.module.vendor, // path to your app's entry point
+        outLoc: dir.public.js + file.bundle.vendor, // where you want the output file
+        logPrefix: 'jspm-vendor', // put at the beginning of log messages from dev builder
+        buildOptions: setting.bundleOptions
+    }),
+    templates: {},
+    styles: {},
+}
+
 module.exports = {
 	app: app,
 	dir: dir,
 	file: file,
 	setting: setting,
-	build: build
+	build: build,
+    builder: builder
 };
