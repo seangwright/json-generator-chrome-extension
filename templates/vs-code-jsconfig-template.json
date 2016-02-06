@@ -1,0 +1,27 @@
+{
+    "fields": [
+        {
+            "name": "compilerOptions",
+            "type": "object",
+            "fields": [
+                {
+                    "name": "target",
+                    "type": "text"
+                },
+                {
+                    "name": "module",
+                    "type": "text",
+                    "number": "single",
+                    "values": ["commonjs", "umd", "ES6"]
+                }
+            ]
+        },
+        {
+            "name": "files",
+            "type": "array",
+            "number": "multiple",
+            "valueType": "text",
+            "values": ["app.js", "model.js"]
+        }
+    ]
+}
