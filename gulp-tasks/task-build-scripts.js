@@ -39,30 +39,30 @@ gulp.task('build-scripts:ng-annotate', ['build-scripts:bundle-app'], function ()
 });
 
 function scriptsAnnotate() {
-	log(`Angular-annotating ${config.file.bundle.app} in ${config.dir.public}`);
+	log(`Angular-annotating ${config.file.bundle.app} in ${config.dir.public.js}`);
 	
-	return gulp.src(config.dir.public + config.file.bundle.app)
+	return gulp.src(config.dir.public.js + config.file.bundle.app)
 	
 	.pipe($.plumber({ handleError: errorHandler }))
 	.pipe($.if(utils.buildDev(), $.sourcemaps.init(config.setting.sourceMaps.init)))
 	.pipe($.ngAnnotate(config.setting.ngAnnotate))
 	.pipe($.if(utils.buildDev(), $.sourcemaps.write(config.setting.sourceMaps.write)))
 	
-	.pipe(gulp.dest(config.dir.public));
+	.pipe(gulp.dest(config.dir.public.js));
 }
 
 gulp.task('build-scripts:bundle-app', [], function () {
 	if (utils.bundleApp()) {
-		log(`Starting bundling of ${config.file.bundle.app} in ${config.dir.public}`);
+		log(`Starting bundling of ${config.file.bundle.app} into ${config.dir.public.js}`);
 		let builder = new Builder('/', './config.js');
 		
 		return builder.bundle(
 			config.app.module.app, 
-			config.dir.public + config.file.bundle.app, 
+			config.dir.public.js + config.file.bundle.app, 
 			config.setting.bundleOptions)
 			
 			.then(function () {
-				log(`Completed bundle ${config.file.bundle.app} in ${config.dir.public}`);
+				log(`Completed bundle ${config.file.bundle.app} in ${config.dir.public.js}`);
 				return;
 			})
 			
@@ -74,16 +74,16 @@ gulp.task('build-scripts:bundle-app', [], function () {
 
 gulp.task('build-scripts:bundle-vendor', ['build-scripts:templates'], function () {
 	if (utils.bundleVendor()) {
-		log(`Starting bundling of ${config.file.bundle.vendor} in ${config.dir.public}`);
+		log(`Starting bundling of ${config.file.bundle.vendor} in ${config.dir.public.js}`);
 		let builder = new Builder('/', './config.js');
 		
 		return builder.bundle(
 			config.app.module.vendor, 
-			config.dir.public + config.file.bundle.vendor, 
+			config.dir.public.js + config.file.bundle.vendor, 
 			config.setting.bundleOptions)
 			
 			.then(function () {
-				log(`Completed bundle ${config.file.bundle.vendor} in ${config.dir.public}`);
+				log(`Completed bundle ${config.file.bundle.vendor} in ${config.dir.public.js}`);
 				return;
 			})
 			
@@ -95,16 +95,16 @@ gulp.task('build-scripts:bundle-vendor', ['build-scripts:templates'], function (
 
 gulp.task('build-scripts:bundle-template', ['build-scripts:template-cache'], function () {
 	if (utils.bundleTemplates()) {
-		log(`Starting bundling of ${config.file.bundle.template} in ${config.dir.public}`);
+		log(`Starting bundling of ${config.file.bundle.template} in ${config.dir.public.js}`);
 		let builder = new Builder('/', './config.js');
 		
 		return builder.bundle(
 			config.app.module.template, 
-			config.dir.public + config.file.bundle.template, 
+			config.dir.public.js + config.file.bundle.template, 
 			{ minify: true, sourceMaps: false })
 			
 			.then(function () {
-				log(`Completed bundle ${config.file.bundle.template} in ${config.dir.public}`);
+				log(`Completed bundle ${config.file.bundle.template} in ${config.dir.public.js}`);
 				return;
 			})
 			
@@ -116,14 +116,14 @@ gulp.task('build-scripts:bundle-template', ['build-scripts:template-cache'], fun
 
 gulp.task('build-scripts:template-cache', [], function () {
 	if (utils.bundleTemplates()) {
-		log(`Building template cache into angular module ${config.file.bundle.template} in ${config.dir.public}`);
+		log(`Building template cache into angular module ${config.file.bundle.template} in ${config.dir.public.js}`);
 		
-		return gulp.src(config.dir.app + '**/*.html')
+		return gulp.src(`${config.dir.src.app}**/*.html`)
 		
 		.pipe($.plumber({ handleError: errorHandler }))
 		.pipe($.htmlmin(config.setting.htmlMin))
 		.pipe($.angularTemplatecache(config.file.bundle.template, config.setting.templateCache))
 		
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.public.js));
 	}
 });

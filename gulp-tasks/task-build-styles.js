@@ -15,16 +15,16 @@ gulp.task('build-styles', ['build-styles:bundle-styles'], function (done) {
 
 gulp.task('build-styles:bundle-styles', [], function () {
 	if (utils.bundleStyles()) {
-		log(`Starting bundling of ${config.file.bundle.style} in ${config.dir.styles}`);
+		log(`Starting bundling of ${config.file.bundle.style} in ${config.dir.public.css}`);
 		let builder = new Builder('/', './config.js');
 		
 		return builder.bundle(
 			config.app.module.style, 
-			config.dir.public + config.file.bundle.style, 
+			config.dir.public.js + config.file.bundle.style, 
 			{ minify: true, sourceMaps: false })
 			
 			.then(function () {
-				log(`Completed bundle ${config.file.bundle.style} in ${config.dir.public}`);
+				log(`Completed bundle ${config.file.bundle.style} in ${config.dir.public.js}`);
 				return;
 			})
 			

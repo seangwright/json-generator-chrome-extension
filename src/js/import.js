@@ -1,5 +1,5 @@
 (function (System) {
     "use strict";
     
-    System.import('app/jsa.module.js');
+    System.import('app/app.module.js'); 
 })(window.System);
