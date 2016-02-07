@@ -19,6 +19,7 @@ System.config({
   map: {
     "angular": "github:angular/bower-angular@1.5.0",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.17",
+    "app:formService": "app/form/service/form.service.module.js",
     "app:styles-adapter": "src/js/styles/styles-adapter.js",
     "app:templates": "public/js/templates.js",
     "babel": "npm:babel-core@5.8.35",
