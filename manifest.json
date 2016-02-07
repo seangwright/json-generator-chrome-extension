@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "Hello World",
-    "description": "This is my first Chrome Extension",
+    "name": "Json Generator",
+    "description": "Creates dynamic HTML forms from spec json files. The values entered into the forms can be used to generate new json files.",
     "version": "1.0",
     
     "browser_action": {

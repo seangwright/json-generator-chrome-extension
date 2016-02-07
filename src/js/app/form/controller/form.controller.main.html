@@ -1,0 +1,26 @@
+<form>
+    <fieldset class="form-group">
+        <h3>Generate .json based on <a ng-href="{{formCtrl.spec.ref}}" target="_blank">{{formCtrl.spec.filename}}</a> <a ng-href="{{formCtrl.spec.src}}">spec</a></h3>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="compilerOptions">compilerOptions</label>
+        <fieldset class="form-group" id="compilerOptions">
+            <label for="module">module</label>
+            <input type="text" class="form-control" id="module" placeholder="commonjs" ng-model="formCtrl.model.compilerOptions.module"
+            ng-change="formCtrl.onModelChanged()">
+            <small class="text-muted">The module system your application uses</small>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="target">module</label>
+            <input type="text" class="form-control" id="target" placeholder="ES6" ng-model="formCtrl.model.compilerOptions.target" ng-change="formCtrl.onModelChanged()">
+            <small class="text-muted">The version of ECMAScript you write javascript in</small>
+        </fieldset>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="files">files</label>
+        <fieldset class="form-group">
+            <textarea class="form-control" id="files" placeholder="app.js" ng-model="formCtrl.temp.files"></textarea>
+            <small class="text-muted">Files you that these settings should be applied to</small>
+        </fieldset>
+    </fieldset>
+</form>
